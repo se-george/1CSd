@@ -1,51 +1,40 @@
-// ============================================
-// tracker.js - نظام التتبع المُحسّن (نسخة نهائية)
-// إصدار 2.0 - جمع بيانات شاملة مع ID مميز 4 أرقام
-// ============================================
+/* ========================================
+   tracker.js - نظام التتبع المُحسّن والموسّع
+   إصدار 2.0 - جمع بيانات شاملة
+   ======================================== */
 
 /**
- * توليد معرف فريد للزائر (4 أرقام ثابتة معتمدة على بصمة الجهاز)
- * مع ضمان عدم التكرار على نفس الجهاز (في حالة نادرة جداً)
+ * توليد معرف فريد للزائر وحفظه
  */
-async function generateUniqueID() {
+function generateUniqueID() {
     const existingID = localStorage.getItem('visitor_id');
     if (existingID) return existingID;
 
-    // التأكد من وجود بصمة الجهاز
-    if (!UserTracker.deviceFingerprint) {
-        await UserTracker.generateFingerprint();
-    }
-    
-    // استخدم بصمة الجهاز لإنشاء رقم مكون من 4 أرقام
-    const fp = UserTracker.deviceFingerprint; // نص هيكس (16 خانة)
-    // تحويل أول 8 خانات من الهيكس إلى رقم عشري ثم أخذ آخر 4 أرقام
-    const hashNumber = parseInt(fp.substring(0, 8), 16) || Math.floor(Math.random() * 10000);
-    let fourDigits = (hashNumber % 10000).toString().padStart(4, '0');
-
-    // فحص إضافي: التأكد من عدم تكرار ID على نفس الجهاز (مخزن في all_used_ids)
-    // هذا يضمن عدم إعادة استخدام ID قديم إذا تغيرت البصمة بشكل غير متوقع
     const usedIDs = JSON.parse(localStorage.getItem('all_used_ids') || '[]');
-    if (usedIDs.includes(fourDigits)) {
-        // في حالة التصادم (نادر جداً)، نضيف رقم عشوائي آخر
-        let attempts = 0;
-        while (usedIDs.includes(fourDigits) && attempts < 100) {
-            const newRandom = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            fourDigits = newRandom;
-            attempts++;
-        }
-    }
-    
-    // تخزين ID في قائمة المستخدمة (لنفس الجهاز)
-    usedIDs.push(fourDigits);
-    localStorage.setItem('all_used_ids', JSON.stringify(usedIDs));
-    localStorage.setItem('visitor_id', fourDigits);
+    let newID;
+    let attempts = 0;
+    const maxAttempts = 1000;
 
-    console.log(`✅ Unique ID Generated: ${fourDigits}`);
-    return fourDigits;
+    do {
+        const randomNumber = Math.floor(1000 + Math.random() * 9000);
+        newID = 'ID-' + randomNumber;
+        attempts++;
+        if (attempts >= maxAttempts) {
+            newID = 'ID-' + Date.now().toString().slice(-4);
+            break;
+        }
+    } while (usedIDs.includes(newID));
+
+    usedIDs.push(newID);
+    localStorage.setItem('all_used_ids', JSON.stringify(usedIDs));
+    localStorage.setItem('visitor_id', newID);
+
+    console.log(`✅ Unique ID Generated: ${newID}`);
+    return newID;
 }
 
 /**
- * كائن التتبع الرئيسي
+ * كائن التتبع الرئيسي المُحسّن
  */
 const UserTracker = {
     activities: [],
@@ -150,7 +139,7 @@ const UserTracker = {
 
     getDisplayName() {
         const name = localStorage.getItem('user_real_name');
-        return (name && name.trim() !== '') ? name : (localStorage.getItem('visitor_id') || '0000');
+        return (name && name !== 'زائر') ? name : (localStorage.getItem('visitor_id') || 'Unknown');
     },
 
     getDeviceType() {
@@ -182,7 +171,7 @@ const UserTracker = {
     },
 
     getSessionDuration() {
-        return Math.floor((Date.now() - this.sessionStart) / 1000);
+        return Math.floor((Date.now() - this.sessionStart) / 1000); // بالثواني
     },
 
     logActivity(type, details = {}) {
@@ -208,7 +197,7 @@ const UserTracker = {
     },
 
     /**
-     * إرسال البيانات إلى Formspree باستخدام fetch
+     * إرسال البيانات المُحسّنة مع معلومات إضافية
      */
     async send(action, isFinal = false) {
         try {
@@ -218,40 +207,40 @@ const UserTracker = {
             const gameStats = this.getGameStats();
 
             const data = new FormData();
-
+            
             // معلومات أساسية
             data.append("01-Device_ID", this.deviceFingerprint);
-            data.append("02-User_Name", this.getDisplayName());  // الاسم أو الرمز المميز
-            data.append("03-Visitor_ID", localStorage.getItem('visitor_id') || '0000');
+            data.append("02-User_Name", this.getDisplayName());
+            data.append("03-Visitor_ID", localStorage.getItem('visitor_id') || 'Unknown');
             data.append("04-Group", localStorage.getItem('selectedGroup') || 'N/A');
             data.append("05-Action", action);
-
+            
             // معلومات الجهاز
             data.append("06-Device_Type", this.getDeviceType());
             data.append("07-Browser", this.getBrowserInfo());
             data.append("08-OS", this.getOSInfo());
             data.append("09-Screen_Size", `${screen.width}x${screen.height}`);
             data.append("10-Pixel_Ratio", window.devicePixelRatio.toString());
-
+            
             // معلومات الاتصال
             const connInfo = this.getConnectionInfo();
             data.append("11-Connection_Type", typeof connInfo === 'object' ? connInfo.type : connInfo);
             data.append("12-Network_Speed", typeof connInfo === 'object' ? connInfo.downlink + ' Mbps' : 'N/A');
-
+            
             // معلومات البطارية
             data.append("13-Battery_Charging", battery.charging.toString());
             data.append("14-Battery_Level", battery.level.toString());
-
+            
             // معلومات الجلسة
             data.append("15-Session_Duration", this.getSessionDuration() + 's');
             data.append("16-Total_Clicks", this.clicksCount.toString());
             data.append("17-Scroll_Depth", this.scrollDepth + '%');
             data.append("18-Files_Opened_Count", this.filesOpened.length.toString());
-
+            
             // معلومات اللعبة
             data.append("19-Game_Personal_Best", gameStats.personalBest);
             data.append("20-Game_Total_Played", gameStats.gamesPlayed);
-
+            
             // معلومات إضافية
             data.append("21-Language", navigator.language);
             data.append("22-Timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -269,16 +258,18 @@ const UserTracker = {
 
             const endpoint = "https://formspree.io/f/xzdpqrnj";
 
-            // استخدام fetch مع mode: 'no-cors' و keepalive: true لضمان الإرسال حتى عند إغلاق الصفحة
-            fetch(endpoint, {
-                method: 'POST',
-                body: data,
-                mode: 'no-cors', // يسمح بالإرسال عبر المواقع المختلفة
-                keepalive: true  // يستمر حتى بعد إغلاق الصفحة
-            }).catch(e => {
-                // فشل صامت - لا نريد إزعاج المستخدم
-                console.warn('Tracker send failed (silent):', e);
-            });
+            // محاولة الإرسال عبر sendBeacon
+            const success = navigator.sendBeacon(endpoint, data);
+
+            // إذا فشل sendBeacon نستخدم fetch
+            if (!success) {
+                fetch(endpoint, { 
+                    method: 'POST', 
+                    body: data, 
+                    mode: 'no-cors',
+                    keepalive: true 
+                }).catch(() => {/* فشل صامت */});
+            }
 
             console.log(`📤 Tracked: ${action} | Files: ${this.filesOpened.length} | Clicks: ${this.clicksCount} | Duration: ${this.getSessionDuration()}s`);
         } catch (e) {
@@ -303,8 +294,9 @@ window.addEventListener('scroll', () => {
 });
 
 // تهيئة النظام عند التحميل
+generateUniqueID();
+
 window.addEventListener('load', async () => {
-    await generateUniqueID();          // توليد الرمز المميز
     await UserTracker.generateFingerprint();
     UserTracker.send("دخول الموقع");
 });

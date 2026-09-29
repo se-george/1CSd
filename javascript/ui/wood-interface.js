@@ -1,13 +1,12 @@
 // ============================================
 // wood-interface.js - واجهة عرض الملفات والمجلدات
-// مع زر تبديل الاتجاه (فعال + دعم fullscreen)
 // ============================================
 
 import { RAW_CONTENT_BASE, NAV_STATE, SUBJECT_FOLDERS, REPO_NAME } from '../core/config.js';
 import { normalizeArabic, autoTranslate, getDisplayName, resetBrowserZoom } from '../core/utils.js';
 import { pushNavigationState, goToWood, getCurrentNavigationState, navigationHistory } from '../core/navigation.js';
 import { smartOpen } from './pdf-viewer.js';
-import { globalFileTree, currentGroup, currentFolder, setCurrentFolder, currentSection } from '../core/state.js';
+import { globalFileTree, currentGroup, currentFolder, setCurrentFolder } from '../core/state.js';
 import { updateDynamicSizes, fetchGlobalTree, updateWoodLogo } from '../core/group-loader.js';
 import { addScrollSystem } from './scroll-system.js';
 import {
@@ -18,242 +17,12 @@ import {
     setupMoveToggleButton,
     setupSearchIcon,
     setupBackButtonInSVG,
-    setupInteractionToggle,
-    setupInstallButton
+    setupInteractionToggle
 } from './ui-controls.js';
 import { setupSearchInput, setupEyeToggleSystem } from './search-and-eye.js';
 
 // ---------- متغير التفاعل ----------
 export let interactionEnabled = true;
-
-export function setInteractionEnabled(value) {
-    interactionEnabled = value;
-    console.log('🔄 Hover:', value ? 'مفعّل ✅' : 'معطّل ❌');
-}
-
-// ============================================
-// زر تبديل الاتجاه الفعال (مع دعم fullscreen)
-// ============================================
-
-let currentLockedOrientation = null; // null, 'landscape', 'portrait'
-
-function showOrientationMessage(message, isError = false) {
-    let msgDiv = document.getElementById('orientation-msg-toast');
-    if (!msgDiv) {
-        msgDiv = document.createElement('div');
-        msgDiv.id = 'orientation-msg-toast';
-        msgDiv.style.cssText = `
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            z-index: 10000;
-            direction: rtl;
-            text-align: center;
-            white-space: nowrap;
-            border: 1px solid #ffcc00;
-            transition: opacity 0.2s;
-            opacity: 1;
-        `;
-        document.body.appendChild(msgDiv);
-    }
-    msgDiv.textContent = message;
-    msgDiv.style.opacity = '1';
-    if (isError) {
-        msgDiv.style.borderColor = '#e74c3c';
-        msgDiv.style.color = '#ffaaaa';
-    } else {
-        msgDiv.style.borderColor = '#2ecc71';
-        msgDiv.style.color = '#fff';
-    }
-    setTimeout(() => {
-        msgDiv.style.opacity = '0';
-    }, 2500);
-}
-
-async function requestFullscreen() {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        try {
-            await elem.requestFullscreen();
-            return true;
-        } catch (err) {
-            console.warn('فشل طلب fullscreen:', err);
-            return false;
-        }
-    }
-    return false;
-}
-
-async function exitFullscreen() {
-    if (document.exitFullscreen) {
-        try {
-            await document.exitFullscreen();
-            return true;
-        } catch (err) {
-            return false;
-        }
-    }
-    return false;
-}
-
-async function lockScreenTo(orientation) {
-    if (!screen.orientation || typeof screen.orientation.lock !== 'function') {
-        showOrientationMessage('❌ متصفحك لا يدعم قفل الاتجاه', true);
-        return false;
-    }
-    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && !location.hostname.startsWith('127.0.0.1')) {
-        showOrientationMessage('❌ قفل الاتجاه يتطلب HTTPS', true);
-        return false;
-    }
-
-    try {
-        await screen.orientation.lock(orientation);
-        currentLockedOrientation = orientation;
-        console.log(`✅ تم قفل الشاشة في الوضع ${orientation === 'landscape' ? 'الأفقي' : 'الرأسي'}`);
-        return true;
-    } catch (err) {
-        console.error('فشل قفل الاتجاه:', err);
-        
-        if (err.message && err.message.includes('fullscreen')) {
-            showOrientationMessage('⏳ جاري طلب ملء الشاشة أولاً...', false);
-            const fullscreenSuccess = await requestFullscreen();
-            if (fullscreenSuccess) {
-                await new Promise(resolve => setTimeout(resolve, 500));
-                try {
-                    await screen.orientation.lock(orientation);
-                    currentLockedOrientation = orientation;
-                    showOrientationMessage(`✅ تم تثبيت الشاشة ${orientation === 'landscape' ? 'أفقياً' : 'عمودياً'} بعد ملء الشاشة`);
-                    return true;
-                } catch (err2) {
-                    showOrientationMessage(`❌ لا يمكن قفل الاتجاه حتى بعد ملء الشاشة: ${err2.message}`, true);
-                    return false;
-                }
-            } else {
-                showOrientationMessage('❌ لا يمكن طلب ملء الشاشة. قد يكون المتصفح لا يسمح بذلك.', true);
-                return false;
-            }
-        }
-        
-        let errorMsg = 'لا يمكن تغيير الاتجاه حالياً.';
-        if (err.name === 'NotAllowedError') {
-            errorMsg = 'يجب النقر على الزر أولاً (تفاعل مباشر)';
-        } else if (err.name === 'SecurityError') {
-            errorMsg = 'الميزة غير متاحة في هذا التطبيق';
-        }
-        showOrientationMessage(`❌ ${errorMsg}`, true);
-        return false;
-    }
-}
-
-function unlockScreen() {
-    if (!screen.orientation || typeof screen.orientation.unlock !== 'function') {
-        showOrientationMessage('❌ لا يمكن إلغاء القفل في هذا المتصفح', true);
-        return false;
-    }
-    try {
-        screen.orientation.unlock();
-        if (document.fullscreenElement) {
-            exitFullscreen().catch(console.warn);
-        }
-        currentLockedOrientation = null;
-        showOrientationMessage('🔓 تم إلغاء القفل، يمكنك تدوير الجهاز يدوياً');
-        return true;
-    } catch (err) {
-        console.warn('فشل إلغاء القفل:', err);
-        return false;
-    }
-}
-
-async function toggleOrientation() {
-    if (currentLockedOrientation) {
-        await unlockScreen();
-        updateOrientationButtonText();
-        return;
-    }
-
-    const isLandscape = window.innerWidth > window.innerHeight;
-    const targetOrientation = isLandscape ? 'landscape' : 'portrait';
-    const success = await lockScreenTo(targetOrientation);
-    if (success) {
-        updateOrientationButtonText();
-    }
-}
-
-function updateOrientationButtonText() {
-    const btnGroup = document.getElementById('orientation-toggle-svg-btn');
-    if (!btnGroup) return;
-    const textElem = btnGroup.querySelector('text');
-    if (!textElem) return;
-    if (currentLockedOrientation) {
-        if (currentLockedOrientation === 'landscape') {
-            textElem.textContent = '🔄 حرر (أفقي)';
-        } else {
-            textElem.textContent = '🔄 حرر (رأسي)';
-        }
-    } else {
-        const isLandscape = window.innerWidth > window.innerHeight;
-        textElem.textContent = isLandscape ? '🔄 قفل رأسي' : '🔄 قفل أفقي';
-    }
-}
-
-function createOrientationToggleButtonInUpperLayer() {
-    if (document.getElementById('orientation-toggle-svg-btn')) return;
-
-    const upperLayer = document.querySelector('#upper-wood-layer');
-    if (!upperLayer) {
-        console.warn('⚠️ upper-wood-layer غير موجود');
-        return;
-    }
-
-    const btnGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    btnGroup.setAttribute('id', 'orientation-toggle-svg-btn');
-    btnGroup.setAttribute('style', 'cursor: pointer;');
-    
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    rect.setAttribute('x', '820');
-    rect.setAttribute('y', '20');
-    rect.setAttribute('width', '150');
-    rect.setAttribute('height', '40');
-    rect.setAttribute('rx', '20');
-    rect.setAttribute('fill', '#000000cc');
-    rect.setAttribute('stroke', '#ffcc00');
-    rect.setAttribute('stroke-width', '2');
-    
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', '895');
-    text.setAttribute('y', '45');
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('fill', '#ffffff');
-    text.setAttribute('font-weight', 'bold');
-    text.setAttribute('font-size', '16px');
-    text.setAttribute('font-family', 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif');
-    
-    const isLandscape = window.innerWidth > window.innerHeight;
-    text.textContent = isLandscape ? '🔄 قفل رأسي' : '🔄 قفل أفقي';
-    
-    btnGroup.appendChild(rect);
-    btnGroup.appendChild(text);
-    
-    btnGroup.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        await toggleOrientation();
-    });
-    
-    upperLayer.appendChild(btnGroup);
-    console.log('✅ زر تبديل الاتجاه (مع دعم fullscreen) مضاف');
-
-    window.addEventListener('resize', () => {
-        if (!currentLockedOrientation) updateOrientationButtonText();
-    });
-}
 
 // ---------- تحديث واجهة الخشب ----------
 export async function updateWoodInterface() {
@@ -265,42 +34,15 @@ export async function updateWoodInterface() {
 
     if (!dynamicGroup || !backBtnText) return;
 
+    // تنظيف العناصر السابقة
     dynamicGroup.querySelectorAll('.wood-folder-group, .wood-file-group, .scroll-container-group, .subject-separator-group, .scroll-bar-group, .window-frame')
         .forEach(el => el.remove());
-
-    const upperLayer = document.querySelector('#upper-wood-layer');
-    if (upperLayer) {
-        const oldTexts = upperLayer.querySelectorAll('.group-name-text, .section-name-text');
-        oldTexts.forEach(el => el.remove());
-        
-        let displayText = '';
-        if (currentSection && currentGroup) {
-            displayText = `Group ${currentGroup} - Section ${currentSection}`;
-        } else if (currentGroup && !currentSection) {
-            displayText = `Group ${currentGroup}`;
-        }
-        
-        if (displayText) {
-            const groupText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            groupText.setAttribute("class", "group-name-text");
-            groupText.setAttribute("x", "30");
-            groupText.setAttribute("y", "45");
-            groupText.setAttribute("fill", "#ffca28");
-            groupText.setAttribute("font-size", "26");
-            groupText.setAttribute("font-weight", "bold");
-            groupText.setAttribute("font-family", "Arial, sans-serif");
-            groupText.style.textShadow = "2px 2px 6px black";
-            groupText.style.pointerEvents = "none";
-            groupText.textContent = displayText;
-            upperLayer.appendChild(groupText);
-            console.log(`🏷️ تم إضافة اسم المجموعة/السكشن: ${displayText}`);
-        }
-    }
 
     await fetchGlobalTree();
 
     const query = normalizeArabic(searchInput ? searchInput.value : '');
 
+    // تحديث نص زر الرجوع
     if (currentFolder === "") {
         backBtnText.textContent = "➡️ إلى الخريطة ➡️";
         const currentState = getCurrentNavigationState();
@@ -331,6 +73,7 @@ export async function updateWoodInterface() {
             `🔙 ${breadcrumb} ${displayLabel}`;
     }
 
+    // تحديث نص زر تغيير الجروب
     if (groupBtnText && currentGroup) {
         groupBtnText.textContent = `Change Group 🔄 ${currentGroup}`;
     }
@@ -362,8 +105,7 @@ export async function updateWoodInterface() {
                     }
                 }
 
-                // ✅ إضافة مجلد 'sections' إلى قائمة المجلدات المخفية
-                if (isDir && name !== 'image' && name !== 'groups' && name !== 'javascript' && name !== 'sections') {
+                if (isDir && name !== 'image' && name !== 'groups' && name !== 'javascript') {
                     itemsMap.set(name, {
                         name: name,
                         type: 'dir',
@@ -386,6 +128,7 @@ export async function updateWoodInterface() {
 
     let filteredData = Array.from(itemsMap.values());
 
+    // ترتيب العناصر
     filteredData.sort((a, b) => {
         if (a.isSubject && !b.isSubject) return -1;
         if (!a.isSubject && b.isSubject) return 1;
@@ -405,9 +148,11 @@ export async function updateWoodInterface() {
         return a.name.localeCompare(b.name);
     });
 
+    // إنشاء مجموعة التمرير
     const scrollContainerGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
     scrollContainerGroup.setAttribute("class", "scroll-container-group");
 
+    // إعداد الـ ClipPath
     const oldClips = mainSvg.querySelectorAll('clipPath[id^="window-clip"]');
     oldClips.forEach(clip => clip.remove());
 
@@ -439,6 +184,7 @@ export async function updateWoodInterface() {
     let fileRowCounter = 0;
     let itemsAdded = 0;
 
+    // تجميع العناصر حسب المادة
     const itemsBySubject = {};
     filteredData.forEach(item => {
         const subjectKey = item.isSubject ? item.subject : 'other';
@@ -569,6 +315,7 @@ export async function updateWoodInterface() {
                 g.appendChild(r);
                 g.appendChild(t);
 
+                // نظام الضغط المطول للمعاينة
                 let longPressTimer = null;
                 let longPressTriggered = false;
                 let touchStartTime = 0;
@@ -663,12 +410,6 @@ export async function updateWoodInterface() {
     addScrollSystem(scrollContainerGroup, scrollContent, separatorGroup, maxScroll, totalContentHeight);
 
     dynamicGroup.appendChild(scrollContainerGroup);
-
-    const installBtn = document.getElementById('install-svg-btn');
-    const mainSvgEl = document.getElementById('main-svg');
-    if (installBtn && mainSvgEl && mainSvgEl.lastElementChild !== installBtn) {
-        mainSvgEl.appendChild(installBtn);
-    }
 }
 
 // ---------- إدخال اسم المستخدم ----------
@@ -825,6 +566,7 @@ export function preventInteractionWhenHidden() {
         attributeFilter: ['class', 'style']
     });
 
+    // الحالة الابتدائية
     if (toggleContainer.classList.contains('hidden') ||
         toggleContainer.classList.contains('fully-hidden') ||
         toggleContainer.style.display === 'none') {
@@ -849,12 +591,11 @@ export function initWoodUI() {
     setupResetButton();
     setupMoveToggleButton();
     setupSearchIcon();
+    
+    // تمرير دالة getter بدلاً من القيمة المباشرة
     setupBackButtonInSVG(() => currentFolder, setCurrentFolder, updateWoodInterface);
+    
     setupInteractionToggle();
     setupSearchInput(updateWoodInterface);
     setupEyeToggleSystem();
-    setupInstallButton();
-
-    // زر تبديل الاتجاه الفعال
-    createOrientationToggleButtonInUpperLayer();
 }

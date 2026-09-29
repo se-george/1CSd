@@ -3,21 +3,18 @@
 // ============================================
 
 import { RAW_CONTENT_BASE, isTouchDevice, TAP_THRESHOLD_MS } from '../core/config.js';
-import * as woodInterface from '../ui/wood-interface.js';
+import { interactionEnabled } from '../ui/wood-interface.js';
 import { getCumulativeTranslate, getGroupImage, wrapText, addShownError, hasShownError } from '../core/utils.js';
 import { smartOpen } from '../ui/pdf-viewer.js';
-import { updateDynamicSizes } from '../core/group-loader.js';
 
-function isInteractionEnabled() {
-    return woodInterface.interactionEnabled;
-}
-
+// حالة التكبير الحالية
 export let activeState = {
     rect: null, zoomPart: null, zoomText: null, zoomBg: null,
     baseText: null, baseBg: null, animationId: null, clipPathId: null,
     touchStartTime: 0, initialScrollLeft: 0
 };
 
+// ---------- تنظيف تأثير الهوفر ----------
 export function cleanupHover() {
     if (!activeState.rect) return;
     if (activeState.animationId) clearInterval(activeState.animationId);
@@ -37,21 +34,9 @@ export function cleanupHover() {
     });
 }
 
-function findNearestBackgroundImage(rect) {
-    let parent = rect.parentElement;
-    const groupContainer = document.getElementById('group-specific-content');
-    while (parent && parent !== groupContainer && parent !== document.body) {
-        const img = parent.querySelector('image[data-src]');
-        if (img) return img;
-        parent = parent.parentElement;
-    }
-    const allImages = groupContainer ? groupContainer.querySelectorAll('image[data-src]') : [];
-    if (allImages.length > 0) return allImages[allImages.length - 1];
-    return null;
-}
-
+// ---------- بدء تأثير الهوفر ----------
 export function startHover() {
-    if (!isInteractionEnabled() || this.classList.contains('list-item')) return;
+    if (!interactionEnabled || this.classList.contains('list-item')) return;
     const mainSvg = document.getElementById('main-svg');
     const clipDefs = mainSvg?.querySelector('defs');
     if (!mainSvg || !clipDefs) return;
@@ -65,6 +50,7 @@ export function startHover() {
     const rH = parseFloat(rect.getAttribute('height')) || rect.getBBox().height;
     const cum = getCumulativeTranslate(rect);
 
+    // ✅ إصلاح NaN: إضافة || 0 لضمان قيمة رقمية دائماً
     const absX = (parseFloat(rect.getAttribute('x')) || 0) + cum.x;
     const absY = (parseFloat(rect.getAttribute('y')) || 0) + cum.y;
     const centerX = absX + rW / 2;
@@ -160,32 +146,9 @@ export function startHover() {
     }, 100);
 }
 
+// ---------- معالجة مستطيل واحد ----------
 export function processRect(r) {
     if (r.hasAttribute('data-processed')) return;
-
-    const colorClasses = ['q', 'v', 'i', 'a', 's', 'l', 'is'];
-    const hasColor = colorClasses.some(c => r.classList.contains(c));
-    
-    // ✅ معاملة خاصة لمستطيلات السكشن (حتى لو بدون لون)
-    const isSectionRect = r.classList.contains('section-specific');
-    
-    if (!hasColor && !isSectionRect) {
-        r.style.visibility = 'hidden';
-        r.style.pointerEvents = 'none';
-        r.setAttribute('data-processed', 'true');
-        return;
-    }
-
-    // تأكد من أن المستطيل ظاهر وقابل للتفاعل
-    r.style.visibility = 'visible';
-    r.style.pointerEvents = 'auto';
-    
-    // إذا كان مستطيل سكشن وليس له لون، أعطه لون مؤقت للرؤية
-    if (isSectionRect && !hasColor) {
-        r.style.stroke = '#ffcc00';
-        r.style.strokeWidth = '3px';
-        r.style.fill = 'rgba(255, 100, 0, 0.2)';
-    }
 
     if (r.classList.contains('w')) r.setAttribute('width', '113.5');
     if (r.classList.contains('hw')) r.setAttribute('width', '56.75');
@@ -201,6 +164,8 @@ export function processRect(r) {
     const name = dataFull || fileName || '';
 
     const w = parseFloat(r.getAttribute('width')) || r.getBBox().width;
+
+    // ✅ إصلاح NaN: إضافة || 0 لضمان قيمة رقمية دائماً
     const x = parseFloat(r.getAttribute('x')) || 0;
     const y = parseFloat(r.getAttribute('y')) || 0;
 
@@ -260,13 +225,13 @@ export function processRect(r) {
     const scrollContainer = document.getElementById('scroll-container');
     if (scrollContainer) {
         r.addEventListener('touchstart', function (e) {
-            if (!isInteractionEnabled()) return;
+            if (!interactionEnabled) return;
             activeState.touchStartTime = Date.now();
             activeState.initialScrollLeft = scrollContainer.scrollLeft;
             startHover.call(this);
         });
         r.addEventListener('touchend', async function (e) {
-            if (!isInteractionEnabled()) return;
+            if (!interactionEnabled) return;
             if (Math.abs(scrollContainer.scrollLeft - activeState.initialScrollLeft) < 10 &&
                 (Date.now() - activeState.touchStartTime) < TAP_THRESHOLD_MS) {
                 if (href && href !== '#') {
@@ -294,6 +259,7 @@ export function processRect(r) {
     r.setAttribute('data-processed', 'true');
 }
 
+// ---------- مسح جميع المستطيلات ومعالجتها ----------
 export function scan() {
     const mainSvg = document.getElementById('main-svg');
     if (!mainSvg) return;
@@ -314,6 +280,7 @@ export function scan() {
         }
     });
 
+    // مراقب الإضافات الجديدة
     if (!window.svgObserver) {
         const observer = new MutationObserver((mutations) => {
             let hasNewElements = false;
@@ -335,7 +302,10 @@ export function scan() {
             });
             if (hasNewElements) {
                 console.log('🔄 تم اكتشاف عناصر جديدة - تحديث viewBox');
-                updateDynamicSizes();
+                // ✅ إصلاح: الاستيراد من group-loader.js وليس wood-interface.js
+                import('../core/group-loader.js').then(({ updateDynamicSizes }) => {
+                    updateDynamicSizes();
+                });
             }
         });
 

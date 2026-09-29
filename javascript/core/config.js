@@ -2,27 +2,12 @@
 // config.js - الثوابت والإعدادات العامة
 // ============================================
 
-export const REPO_NAME = "s4";
+export const REPO_NAME = "s3";
 export const GITHUB_USER = "MUE24Med";
 
 export const NEW_API_BASE = `https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/contents`;
 export const TREE_API_URL = `https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/git/trees/main?recursive=1`;
 export const RAW_CONTENT_BASE = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/`;
-
-// ✅ CACHE_NAME يقرأ من sw.js عبر الـ Service Worker registration
-// لما تغير sw.js?v=... في index.html — config.js يتحدث تلقائياً
-export const CACHE_NAME = (() => {
-    try {
-        // لو في Service Worker نشط — اقرأ منه
-        const swUrl = navigator.serviceWorker?.controller?.scriptURL;
-        if (swUrl) {
-            const v = new URL(swUrl).searchParams.get('v');
-            if (v) return v;
-        }
-    } catch (_) {}
-    // fallback — اقرأ من localStorage لو اتحفظ قبل كده
-    return localStorage.getItem('sw_cache_name') || 'semester-4-cache-default';
-})();
 
 // الملفات المحمية (لا يتم تحديثها تلقائياً)
 export const PROTECTED_FILES = [

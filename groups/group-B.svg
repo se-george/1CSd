@@ -1,86 +1,21 @@
+<!-- groups/group-B.svg -->
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <!-- الاسبوع الأول -->
 <g transform="translate(1024,0)">
     <image data-src="image/B/01.webp" width="1024" height="2454" />
-<!-- Saturday 01 السبت -->
-<g transform="translate(140,0)" >
 </g>
-<!-- Sunday 01 الأحد -->
-<g transform="translate(253,0)" >
-<rect x="0" y="0846" height="452" class="m w" data-href="1"/>
-</g>
-<!-- Monday 01 الإثنين -->
-<g transform="translate(368,0)" >
-<rect x="0" y="0412" height="433" class="m w" data-href="2"/>
-<rect x="0" y="1298" height="381" class="m w" data-href="3"/>
-<rect x="0" y="1683" height="430" class="m w" data-href="4"/>
-</g>
-<!-- Tuesday 01 الثلاثاء -->
-<g transform="translate(484,0)" >
-<rect x="0" y="0412" height="432" class="m w" data-href="5"/>
-<rect x="0" y="0845" height="452" class="m w" data-href="6"/>
-</g>
-<!-- Wednesday 01 الأربع -->
-<g transform="translate(598,0)" >
-<rect x="0" y="0412" height="431" class="m w" data-href="7"/>
-<rect x="0" y="1298" height="382" class="m w" data-href="8"/>
-</g>
-<!-- Thursday 01 الخميس -->
-<g transform="translate(713,0)" >
-<rect x="0" y="0413" height="430" class="m w" data-href="9"/>
-<rect x="0" y="1300" height="382" class="m w" data-href="10"/>
-</g></g>
 
 <!-- الاسبوع الثاني -->
 <g transform="translate(2048,0)">
     <image data-src="image/B/02.webp" width="1024" height="2454" />
-<!-- Saturday 02 السبت -->
-<g transform="translate(140,0)" >
 </g>
-<!-- Sunday 02 الأحد -->
-<g transform="translate(253,0)" >
-<rect x="0" y="0841" height="461" class="m w" data-href="1"/>
-</g>
-<!-- Monday 02 الإثنين -->
-<g transform="translate(368,0)" >
-<rect x="0" y="0422" height="417" class="m w" data-href="2"/>
-<rect x="0" y="1303" height="391" class="m w" data-href="3"/>
-<rect x="0" y="1696" height="419" class="m w" data-href="4"/>
-</g>
-<!-- Tuesday 02 الثلاثاء -->
-<g transform="translate(484,0)" >
-<rect x="0" y="0422" height="418" class="m w" data-href="5"/>
-<rect x="0" y="0840" height="463" class="m w" data-href="6"/>
-</g>
-<!-- Wednesday 02 الأربع -->
-<g transform="translate(598,0)" >
-<rect x="0" y="0841" height="462" class="m w" data-href="7"/>
-<rect x="0" y="1695" height="419" class="m w l" data-href="HIC/Lecture/Fouad/7-CAD and DM.pdf"/>
-</g>
-<!-- Thursday 02 الخميس -->
-<g transform="translate(713,0)" >
-</g></g>
 
 <!-- الاسبوع الثالث -->
 <g transform="translate(3072,0)">
     <image data-src="image/B/03.webp" width="1024" height="2454" />
-<!-- Tuesday 03 الثلاثاء -->
-<g transform="translate(484,0)" >
-<rect x="0" y="0512" height="699" class="m w l" data-href="HIC/Lecture/Fouad/Environmental health.pdf"/>
-<rect x="0" y="1211" height="704" class="m w" data-href="2"/>
 </g>
-<!-- Wednesday 03 الأربع -->
-<g transform="translate(598,0)" >
-<rect x="0" y="0512" height="699" class="m w" data-href="3"/>
-<rect x="0" y="1211" height="704" class="m w" data-href="4"/>
-</g>
-<!-- Thursday 03 الخميس -->
-<g transform="translate(713,0)" >
-<rect x="0" y="0512" height="699" class="m w" data-href="5"/>
-<rect x="0" y="1211" height="704" class="m w" data-href="6"/>
-</g></g>
 
 <!-- الاسبوع الرابع -->
 <g transform="translate(4096,0)">
@@ -89,109 +24,336 @@
 
 <!-- الاسبوع الخامس -->
 <g transform="translate(5120,0)">
-
-<image data-src="image/B/15/05.webp" width="1024" height="2454" />
-
-    <!-- Sunday 05 الأحد -->
-    <g transform="translate(253,0)">
-        <rect x="0" y="321"  height="438" class="m w" data-href="GIT/Practical/Anatomy-01.pdf"/>
-        <rect x="0" y="758"  height="503" class="m w l" data-href="GIT/Lecture/1nd week/Microbiology-01.pdf"/>
-        <rect x="0" y="1260" height="534" class="m w" data-href="GIT/Practical/Histology-01.pdf"/>
-        <rect x="0" y="1795" height="406" class="m w" data-href="ipc"/>
-    </g>
-
-    <!-- Monday 05 الإثنين -->
-    <g transform="translate(368,0)">
-        <rect x="0" y="322"  height="328" class="m w l" data-href="GIT/Lecture/1nd week/Histology-01.pdf"/>
-        <rect x="0" y="1249" height="544" class="m w s" data-href="GIT/Practical/1st week/2 ed. section 1 GIT jundice.pdf"/>
-        <rect x="0" y="1794" height="406" class="m w l" data-href="GIT/Lecture/1nd week/Anatomy-01.pdf"/>
-        <rect x="0" y="2222" height="79"  class="m w" data-href="9"/>
-    </g>
-
-    <!-- Tuesday 05 الثلاثاء -->
-    <g transform="translate(484,0)">
-        <rect x="0" y="758"  height="503" class="m w" data-href="10"/>
-        <rect x="0" y="1794" height="407" class="m w l" data-href="GIT/Lecture/1nd week/Biochemistry-01.pdf"/>
-    </g>
-
-    <!-- Thursday 05 الخميس -->
-    <g transform="translate(713,0)">
-        <rect x="0" y="321"  height="437" class="m w" data-href="14"/>
-        <rect x="0" y="1261" height="533" class="m w" data-href="15"/>
-    </g>
-
+    <image data-src="image/B/05.webp" width="1024" height="2454" />
 </g>
 
 <!-- الاسبوع السادس -->
 <g transform="translate(6144,0)">
+    <image data-src="image/B/06.webp" width="1024" height="2454" />
+</g>
 
-    <!-- Saturday 06 السبت -->
-    <g transform="translate(140,0)">
-        <rect x="0" y="835"  height="519" class="m w" data-href="1"/>
-        <rect x="0" y="1787" height="465" class="m w" data-href="2"/>
-    </g>
-
-    <!-- Sunday 06 الأحد -->
-    <g transform="translate(254,0)">
-        <rect x="0" y="833"  height="520" class="m w" data-href="3"/>
-        <rect x="0" y="1355" height="432" class="m w" data-href="4"/>
-    </g>
-
-    <!-- Tuesday 06 الثلاثاء -->
-    <g transform="translate(484,0)">
-        <rect x="0" y="344"  height="488" class="m w" data-href="5"/>
-         <rect x="0" y="834"  height="521" class="m w l" data-href="GIT/Lecture/2nd week/Physiology-03.pdf"/>
-        <rect x="0" y="1355" height="433" class="m w l" data-href="GIT/Lecture/2nd week/Anatomy-02.pdf"/>
-        <rect x="0" y="1789" height="465" class="m w" data-href="8"/>
-    </g>
-
-    <!-- Wednesday 06 الأربع -->
-    <g transform="translate(598,0)">
-        <rect x="0" y="344"  height="367" class="m w l" data-href="GIT/Lecture/2nd week/Diseases of the Oral Cavity, Salivary Glands DR.OMNIA.pdf"/>
-
-        <rect x="0" y="832"  height="521" class="m w" data-href="10"/>
-    </g>
-
-    <!-- Thursday 06 الخميس -->
-    <g transform="translate(712,0)">
-        <rect x="0" y="343"  height="490" class="m w" data-href="11"/>
-
-        <rect x="0" y="1355" height="432" class="m w" data-href="13"/>
-</g></g>
 <!-- الاسبوع السابع -->
 <g transform="translate(7168,0)">
     <image data-src="image/B/07.webp" width="1024" height="2454" />
-<!-- Saturday 07 السبت -->
-<g transform="translate(140,0)" >
-<rect x="0" y="1294" height="490" class="m w l" data-href="GIT/Lecture/3/Anatomy-3.pdf"/>
-<rect x="0" y="1785" height="464" class="m w" data-href="3"/>
 </g>
-<!-- Sunday 07 الأحد -->
+
+<!-- الاسبوع الثامن -->
+<g transform="translate(8192,0)">
+    <image data-src="image/B/08.webp" width="1024" height="2454" />
+    
+    <!-- Monday 8 -->
+    <g transform="translate(368,0)">
+        <rect x="0" y="703" height="380" class="m w l" data-href="RRS/Lecture/micro-01.pdf"/>
+        <rect x="0" y="1083" height="253.5" class="m w l" data-href="RRS/Lecture/patho-01.pdf"/>
+        <rect x="0" y="1339" height="125" class="m w q" data-href="RRS/Quesion/patho-01.pdf"/>
+        <rect x="0" y="1465" height="378.5" class="m w l" data-href="RRS/Lecture/physio-02.pdf"/>
+        <rect x="0" y="1845" height="380" class="m w s" data-href="RRS/Section/anatomy-01.pdf"/>
+    </g>
+    
+    <!-- Wednesday 8 -->
+    <g transform="translate(598,0)">
+        <rect x="0" y="366" height="315" class="m w l" data-href="RRS/Lecture/physio-01.pdf"/>
+        <rect x="0" y="1846" height="253.4" class="m w l" data-href="RRS/Lecture/physio-02.pdf"/>
+        <rect x="0" y="2100" height="127" class="m w q" data-href="RRS/Question/physio-01.pdf"/>
+    </g>
+    
+    <!-- Thursday 8 -->
+    <g transform="translate(712.35,0)">
+        <rect x="0" y="702" height="380" class="m w l" data-href="RRS/Lecture/histo-01.pdf"/>
+        <rect x="0" y="1465" height="380" class="m w l" data-href="RRS/Lecture/anatomy-02.pdf"/>
+    </g>
+</g>
+
+<!-- الاسبوع التاسع -->
+<g transform="translate(9216,0)">
+    <image data-src="image/B/09.webp" width="1024" height="2454"/>
+    
+    <!-- Saturday 9 -->
+    <g transform="translate(140,0)">
+        <rect x="0" y="309" height="340.63" class="m w l" data-href="RRS/Lecture/pharma-01.pdf"/>
+        <rect x="0" y="876" height="349" class="m w i" data-href="IPC/book.pdf"/>
+        <rect x="0" y="1225" height="121" class="m hw q" data-href="IPC/Question/09.pdf"/>
+        <rect x="57.5" y="1225" height="121" class="m hw a" data-href="IPC/Answer/09.pdf"/>
+        <rect x="0" y="1810.38" height="470.24" class="m w l" data-href="#"/>
+    </g>
+    
+    <!-- Monday 9 -->
+    <g transform="translate(370,0)">
+        <rect x="0" y="422.3" height="456.42" class="m w l" data-href="RRS/Lecture/physio-03.pdf"/>
+        <rect x="0" y="1369" height="450" class="m w l" data-href="RRS/Lecture/histo-02.pdf"/>
+        <rect x="0" y="1812.1" height="471.44" class="m w l" data-href="#"/>
+    </g>
+    
+    <!-- Tuesday 9 -->
+    <g transform="translate(485,0)">
+        <rect x="0" y="1121.29" height="347.86" class="m w l" data-href="#"/>
+        <rect x="0" y="1470.58" height="340.47" class="m w l" data-href="#"/>
+        <rect x="0" y="1813.77" height="361.36" class="m w l" data-href="#"/>
+    </g>
+    
+    <!-- Wednesday 9 -->
+    <g transform="translate(600,0)">
+        <rect x="0" y="421.64" height="457.44" class="m w l" data-href="#"/>
+        <rect x="0" y="1469.19" height="343.19" class="m w l" data-href="RRS/Lecture/physio-04.pdf"/>
+    </g>
+    
+    <!-- Thursday 9 -->
+    <g transform="translate(715,0)">
+        <rect x="0" y="422.25" height="340.47" class="m w l" data-href="#"/>
+        <rect x="0" y="877.49" height="485.43" class="m w l" data-href="#"/>
+        <rect x="0" y="1364.73" height="447.54" class="m w l" data-href="#"/>
+    </g>
+</g>
+
+<!-- الاسبوع العاشر -->
+<g transform="translate(10240,0)">
+    <image data-src="image/B/10.webp" width="1024" height="2454" />
+</g>
+
+<!-- الاسبوع الحادي عشر-->
+<g transform="translate(11264,0)">
+    <image data-src="image/B/11.webp" width="1024" height="2454" />
+</g>
+
+<!-- الاسبوع الثاني عشر -->
+<g transform="translate(12288,0)">
+    <image data-src="image/B/12.webp" width="1024" height="2454" />
+    
+    <!-- Saturday 12 -->
+    <g transform="translate(138.41,0)">
+        <rect x="0" y="557.66" height="628.7" class="m w l" data-href="URI/Lecture/pharma-01.pdf"/>
+    </g>
+</g>
+
+<!-- الاسبوع الثالث عشر-->
+<g transform="translate(13312,0)">
+    <image data-src="image/B/13.webp" width="1024" height="2454" />
+    
+    <!-- Saturday 13 -->
+    <g transform="translate(139,0)">
+        <rect x="0" y="937.7" height="468.3" class="m w l" data-href="#"/>
+        <rect x="0" y="1409" height="472.3" class="m w l" data-href="URI/Lecture/pharma-02.pdf"/>
+        <rect x="0" y="1883.5" height="395.5" class="m w s" data-href="URI/Section/micro-01.pdf"/>
+    </g>
+    
+    <!-- Monday 13 -->
+    <g transform="translate(368,0)">
+        <rect x="0" y="415.1" height="424.1" class="m w l" data-href="#"/>
+        <rect x="0" y="839.15" height="445" class="m w l" data-href="#"/>
+        <rect x="0" y="1287.75" height="484.32" class="m w i" data-href="IPC/Lecture/Chest Inspection and Palpation.pdf" data-full-text="Chest Inspection and Palpation .pdf"/>
+        <rect x="0" y="1773.4" height="505.15" class="m w l" data-href="URI/Lecture/physio-01.pdf"/>
+    </g>
+    
+    <!-- Tuesday 13 -->
+    <g transform="translate(485,0)">
+        <rect x="0" y="311.4" height="426.454" class="m w l" data-href="URI/Lecture/patho-01.pdf"/>
+        <rect x="0" y="1285.3" height="486" class="m w l" data-href="#"/>
+    </g>
+    
+    <!-- Wednesday 13 -->
+    <g transform="translate(598,0)">
+        <rect x="0" y="415.1" height="323.85" class="m w l" data-href="URI/Lecture/micro-01.pdf"/>
+        <rect x="0" y="841.4" height="444" class="m w l " data-href="URI/Lecture/histo-01.pdf"/>
+        <rect x="0" y="1286.2" height="486.5" class="m w l" data-href="#"/>
+    </g>
+    
+    <!-- Thursday 13 -->
+    <g transform="translate(714,0)">
+        <rect x="0" y="418.7" height="420" class="m w l" data-href="#"/>
+        <rect x="0" y="1286.5" height="485" class="m w l" data-href="#"/>
+        <rect x="0" y="1772.3" height="508.2" class="m w l" data-href="#"/>
+    </g>
+</g>
+
+<!-- الاسبوع الرابع عشر-->
+<g transform="translate(14336,0)">
+    <image data-src="image/B/14.webp" width="1024" height="2454" />
+    
+    <!-- Saturday 14 -->
+    <g transform="translate(138,0)">
+        <rect x="0" y="242" height="350.6" class="m w l" data-href="#" />
+        <rect x="0" y="593" height="341.5" class="m w l" data-href="#" />
+        <rect x="0" y="934.3" height="320" class="m w l" data-href="URI/Lecture/pharma-03.pdf" />
+    </g>
+    
+    <!-- Sunday 14 -->
+    <g transform="translate(252.8,0)">
+        <rect x="0" y="1264.5" height="494" class="m w l" data-href="URI/Lecture/anatomy-02.pdf" />
+        <rect x="0" y="1749.5" height="496.75" class="m w q" data-href="URI/Question/D-pharma-01.pdf" />
+    </g>
+    
+    <!-- Monday 14 -->
+    <g transform="translate(368.5,0)">
+        <rect x="0" y="1204.3"  height="494.7" class="m w l" data-href="URI/Lecture/para-01.pdf" />
+        <rect x="0" y="650.4" height="350" class="m w l" data-href="#" />
+    </g>
+
+    <!-- Tuesday 14 -->
+    <g transform="translate(483,0)">
+        <rect x="0" y="1301.4"  height="495" class="m w l" data-href="#" />
+        <rect x="0" y="817.5" height="436" class="m w i" data-href="IPC/Question/Discussion-01.pdf" />
+        <rect x="0" y="1797.6" height="494.7" class="m w l" data-href="#" />
+    </g>
+
+    <!-- Wednesday 14 -->
+    <g transform="translate(598,0)">
+        <rect x="0" y="864.5"  height="436.6" class="m w l" data-href="#" />
+        <rect x="0" y="288.7"  height="350.55" class="m w l" data-href="#" />
+        <rect x="0" y="1300.7"  height="495.8" class="m w l" data-href="URI/Lecture/patho-02.pdf" />
+    </g>
+
+    <!-- Thursday 14 -->
+    <g transform="translate(712.5,0)">
+        <rect x="0" y="1300.8" height="371.58" class="m w l" data-href="#"/>
+        <rect x="0" y="863.9" height="436" class="m w l" data-href="#"/>
+        <rect x="0" y="1673" height="620" class="m w l" data-href="URI/Lecture/patho-03.pdf" />
+    </g>
+</g>
+
+<!-- الاسبوع الخامس عشر -->
+<g transform="translate(15360,0)">
+    <image data-src="image/B/15.webp" width="1024" height="2454" />
+</g>
+
+<!-- الاسبوع السادس عشر -->
+<g transform="translate(16384,0)">
+    <image data-src="image/B/16.webp" width="1024" height="2454" />
+</g>
+
+<!-- الاسبوع السابع عشر -->
+<g transform="translate(17408,0)">
+    <image data-src="image/B/17.webp" width="1024" height="2454" />
+    
+    <!-- Monday 17 -->
+    <g transform="translate(368,0)">
+        <rect x="0" y="1093.5" height="327.32" class="m w is" data-href="ipc" />
+        <rect x="0" y="1423" height="327.75" class="m w l" data-href="HEM/patho-01.pdf" />
+        <rect x="0" y="1752" height="370.7" class="m w l" data-href="#" />
+    </g>
+
+    <!-- Tuesday 17 -->
+    <g transform="translate(484,0)">
+        <rect x="0" y="355.4" height="518.2" class="m w l" data-href="#" />
+        <rect x="0" y="875.4" height="438.1" class="m w l" data-href="#" />
+        <rect x="0" y="1313" height="438.53" class="m w s" data-href="#" />
+        <rect x="0" y="1752.2" height="492.9" class="m w s" data-href="#" />
+    </g>
+
+    <!-- Wednesday 17 -->
+    <g transform="translate(598,0)">
+        <rect y="355.18" height="517" class="m w l" data-href="#" />
+    </g>
+
+    <!-- Thursday 17 -->
+    <g transform="translate(713,0)">
+        <rect y="874" height="438.76" class="m w l" data-href="#" />
+    </g>
+</g>
+
+<!-- الاسبوع الثامن عشر -->
+<g transform="translate(18432,0)">
+    <image data-src="image/B/18.webp" width="1024" height="2454" />
+</g>
+
+<!-- الاسبوع التاسع عشر -->
+<g transform="translate(19456,0)">
+    <image data-src="image/B/19.webp" width="1024" height="2454" />
+    
+    <!-- Saturday 19 -->
+    <g transform="translate(140,0)">
+        <rect x="0" y="330" height="539.5" class="m w" data-href="#" />
+        <rect x="0" y="868" height="490" class="m w" data-href="#" />
+        <rect x="0" y="1358" height="492.4" class="m w" data-href="#" />
+    </g>
+
+    <!-- Monday 19 -->
+    <g transform="translate(368,0)">
+        <rect y="329.7" height="536.9" class="m w s" data-href="HEM/Section/micro-01.pdf" />
+        <rect x="0" y="866.25" height="492.8" class="m w s" data-href="HEM/Section/para-01.pdf" />
+        <rect x="0" y="1358.3" height="492" class="m w l" data-href="HEM/Lecture/patho-01.pdf" />
+        <rect x="0" y="1850" height="409.6" class="m w" data-href="#" />
+    </g>
+
+    <!-- Tuesday 19 -->
+    <g transform="translate(484,0)">
+        <rect x="0" y="329.7" height="536.9" class="m w" data-href="#" />
+        <rect x="0" y="866.25" height="492.8" class="m w" data-href="#" />
+    </g>
+
+    <!-- Wednesday 19 -->
+    <g transform="translate(598,0)">
+        <rect x="0" y="332" height="534.6" class="m w" data-href="#" />
+        <rect x="0" y="868" height="491.7" class="m w" data-href="#" />
+        <rect x="0" y="1359.2" height="491" class="m w" data-href="#" />
+        <rect x="0" y="1851.4" height="409.5" class="m w" data-href="#" />
+    </g>
+</g>
+
+<!-- الاسبوع العشرين -->
+<g transform="translate(20480,0)">
+    <image data-src="image/B/20.webp" width="1024" height="2454" />
+</g>
+
+<!-- الاسبوع الواحد و العشرين -->
+<g transform="translate(21504,0)">
+    <image data-src="image/B/21.webp" width="1024" height="2454" />
+    
+    <!-- Saturday 21 -->
+    <g transform="translate(140,0)">
+        <rect x="0" y="1128.5" height="376.5" class="m w" data-href="#" />
+        <rect x="0" y="150.8" height="378" class="m w" data-href="#"/>
+        <rect x="0" y="1886.2" height="287" class="m w" data-href="#"/>
+    </g>
+    
+    <!-- Sunday 21 -->
+    <g transform="translate(253,0)">
+        <rect x="0" y="1128.3" height="376.71" class="m w l" data-href="HEM/Lecture/para-01.pdf" />
+        <rect x="0" y="1505.7" height="378.8" class="m w s" data-href="#" />
+        <rect x="0" y="1885.5" height="289.5" class="m w l" data-href="HEM/Lecture/physio-02.pdf" />
+    </g>
+    
+    <!-- Monday 21 -->
+    <g transform="translate(368.5,0)">
+        <rect x="0" y="289.3" height="448.1" class="m w" data-href="#" />
+        <rect x="0" y="853.5" height="547.6" class="m w" data-href="#" />
+        <rect x="0" y="1886.3" height="384.2" class="m w" data-href="#" />
+    </g>
+    
+    <!-- Wednesday 21 -->
+    <g transform="translate(598,0)">
+        <rect x="0" y="1403" height="481" class="m w" data-href="#" />
+    </g>
+    
+    <!-- Thursday 21 -->
+    <g transform="translate(713,0)">
+        <rect x="0" y="391.2" height="461" class="m w" data-href="#" />
+        <rect x="0" y="854" height="547" class="m w" data-href="#" />
+        <rect x="0" y="1403.1" height="482.6" class="m w" data-href="#" />
+    </g>
+</g>
+
+<!-- الاسبوع الثاني و العشرين -->
+<g transform="translate(22528,0)">
+    <image data-src="image/B/22.webp" width="1024" height="2454" />
+<!-- Saturday 22 -->
+<g transform="translate(140,0)" >
+</g>
+<!-- Sunday 22 -->
 <g transform="translate(253,0)" >
 </g>
-<!-- Monday 07 الإثنين -->
+<!-- Monday 22 -->
 <g transform="translate(368,0)" >
-<rect x="0" y="347"  height="481" class="m w" data-href="4"/>
-
-<rect x="0" y="1292" height="492" class="m w l" data-href="GIT/Lecture/3/Lecture 2 Antiemetics, Antidiarrheal, Laxatives, spasmolytics, IBD and IBS.pdf"/>
-
-<rect x="0" y="1785" height="462" class="m w" data-href="6"/>
 </g>
-<!-- Tuesday 07 الثلاثاء -->
+<!-- Tuesday 22 -->
 <g transform="translate(484,0)" >
-<rect x="0" y="346"  height="373" class="m w" data-href="8"/>
-<rect x="0" y="1061" height="349" class="m w" data-href="9"/>
-<rect x="0" y="1413" height="370" class="m w" data-href="10"/>
 </g>
-<!-- Wednesday 07 الأربع -->
+<!-- Wednesday 22 -->
 <g transform="translate(598,0)" >
-<rect x="0" y="347"  height="483" class="m w" data-href="11"/>
-<rect x="0" y="1063" height="348" class="m w" data-href="12"/>
-<rect x="0" y="1413" height="372" class="m w" data-href="13"/>
 </g>
-<!-- Thursday 07 الخميس -->
+<!-- Thursday 22 -->
 <g transform="translate(713,0)" >
-<rect x="0" y="829"  height="463" class="m w" data-href="14"/>
 </g>
 </g>
+
+<g id="dynamic-links-group"></g>
 </svg>
