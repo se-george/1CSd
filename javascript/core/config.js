@@ -28,8 +28,8 @@ export function isProtectedFile(filename) {
 
 // أسماء المواد للتصنيف
 export const SUBJECT_FOLDERS = [
-    'anatomy', 'histo', 'physio', 'bio',
-    'micro', 'para', 'pharma', 'patho'
+    'Lecture, 'section, 'book', 'Assignment,
+    'Quis'
 ];
 
 // خريطة الترجمة للأسماء
