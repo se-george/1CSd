@@ -638,7 +638,7 @@ html, body {
   }
 
   #group-buttons {
-    grid-template-columns: repeat(3, 1fr); /* الحفاظ على 3 أعمدة حتى في الموبايل */
+    grid-template-columns: repeat(2, 1fr); /* الحفاظ على 3 أعمدة حتى في الموبايل */
     gap: 8px;
     padding: 0 5px;
   }
