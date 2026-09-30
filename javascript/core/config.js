@@ -2,8 +2,8 @@
 // config.js - الثوابت والإعدادات العامة
 // ============================================
 
-export const REPO_NAME = "s3";
-export const GITHUB_USER = "MUE24Med";
+export const REPO_NAME = "CS26";
+export const GITHUB_USER = "se-george";
 
 export const NEW_API_BASE = `https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/contents`;
 export const TREE_API_URL = `https://api.github.com/repos/${GITHUB_USER}/${REPO_NAME}/git/trees/main?recursive=1`;
