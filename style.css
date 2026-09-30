@@ -578,100 +578,136 @@ html, body {
 .l { stroke: var(--color-l); }
 .is { stroke: var(--color-is); }
 
-/* [003] شاشة اختيار المجموعة */
-#group-selection-screen {
-  height: 100svh;
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
+/* ==========================================================================
+   [003] شاشة اختيار المجموعة (Group Selection Screen)
+   ========================================================================== */
 
-#group-selection-screen.hidden {
-  opacity: 0;
-  transform: scale(0.9);
-  pointer-events: none;
+#group-selection-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #121212;
+  box-sizing: border-box;
+  padding: 15px;
 }
 
 #group-selection-content {
   text-align: center;
-  width: 90%;
-  max-width: 600px;
-  transform: scale(0.85);
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #main-logo {
-  width: 300px;
-  max-width: 80vw;
+  width: 150px;
+  max-width: 40vw;
   height: auto;
-  margin-bottom: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+  margin-bottom: 15px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+  transition: width 0.3s ease, margin 0.3s ease;
 }
 
 #group-selection-content h1 {
-  color: #ffcc00;
-  font-size: clamp(1.2rem, 4vw, 2rem);
-  margin-bottom: 40px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
+  color: #ffffff;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 #group-buttons {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  padding: 0 20px;
+  gap: 12px;
+  padding: 0 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* تصميم أزرار المجموعات */
 .group-btn {
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-  border: 2px solid #444;
-  border-radius: 15px;
-  padding: 30px 20px;
+  border: 2px solid #444444;
+  border-radius: 12px;
+  padding: 12px 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
 }
 
 .group-btn:hover {
   border-color: #ffcc00;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 204, 0, 0.25);
 }
 
 .group-btn:active {
-  transform: translateY(-2px) scale(0.98);
+  transform: scale(0.96);
+  border-color: #e6b800;
 }
 
 .group-letter {
-  font-size: 3rem;
+  font-size: clamp(1.4rem, 4.5vh, 2.2rem);
   font-weight: bold;
   color: #ffcc00;
+  line-height: 1;
 }
 
 .group-label {
-  font-size: clamp(0.9rem, 3vw, 1.1rem);
-  color: #ccc;
+  font-size: clamp(0.65rem, 1.8vh, 0.85rem);
+  color: #cccccc;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
-@media (max-width: 480px) {
+/* --------------------------------------------------------------------------
+   التكيف الذكي حسب اتجاه الشاشة (Orientation Queries)
+   -------------------------------------------------------------------------- */
+
+/* 📱 الشاشة بالطول (Portrait): الضلع الأطول هو الارتفاع -> 3 صفوف × 2 عمود */
+@media (orientation: portrait) {
   #group-buttons {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
   }
-  .group-letter { font-size: 2.5rem; }
-  #main-logo { width: 200px; }
 }
+
+/* 🔄 الشاشة بالعرض (Landscape): الضلع الأطول هو العرض -> 2 صف × 3 أعمدة */
+@media (orientation: landscape) {
+  #group-buttons {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+  }
+
+  /* ضغط المسافات العلوية لمنع الـ Scroll في الوضع العرضي */
+  #main-logo {
+    width: 100px;
+    margin-bottom: 8px;
+  }
+
+  #group-selection-content h1 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .group-btn {
+    padding: 8px 4px;
+  }
+}
+
 
 /* [004] عارض PDF */
 #pdf-overlay {

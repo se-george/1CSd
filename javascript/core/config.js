@@ -28,7 +28,7 @@ export function isProtectedFile(filename) {
 
 // أسماء المواد للتصنيف
 export const SUBJECT_FOLDERS = [
-    'Lecture, 'section, 'book', 'Assignment,
+    'Lecture', 'section', 'book', 'Assignment',
     'Quis'
 ];
 
