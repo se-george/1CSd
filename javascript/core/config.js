@@ -34,23 +34,15 @@ export const SUBJECT_FOLDERS = [
 
 // خريطة الترجمة للأسماء
 export const translationMap = {
-    'physio': 'فسيولوجي',
-    'anatomy': 'اناتومي',
-    'histo': 'هستولوجي',
-    'patho': 'باثولوجي',
-    'pharma': 'فارماكولوجي',
-    'micro': 'ميكروبيولوجي',
-    'para': 'باراسيتولوجي',
+    'Percalculus': 'بريكالكيولاس',
+    'IS': 'Introduction to information System',
+    'Introduction to Computing': 'كومبيوتينج',
     'section': 'سكشن',
     'lecture': 'محاضرة',
     'question': 'أسئلة',
     'answer': 'إجابات',
     'discussion': 'مناقشة',
     'book': 'كتاب',
-    'rrs': 'جهاز تنفسي',
-    'uri': 'جهاز بولي',
-    'cvs': 'جهاز دوري',
-    'ipc': 'مهارات اتصال',
     'bio': 'بيوكيميستري',
     '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
     '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9'
